@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+
+  app:
+    image: php
+    volumes:
+      - ./:/var/www/
+      - ./web:/var/www/html
+
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    image: mysql
+    ports:
+      - 3306:3306
+
+  php:
+    build: ./docker/php
+    links:
+      - db
+    ports:
+      - 80:80
+    volumes_from:
+      - app
