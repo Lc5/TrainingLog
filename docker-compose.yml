@@ -5,8 +5,7 @@ services:
   app:
     image: php
     volumes:
-      - ./:/var/www/
-      - ./web:/var/www/html
+      - ./:/var/www/html
 
   db:
     environment:
