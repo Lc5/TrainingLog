@@ -19,7 +19,7 @@ COPY php.ini /usr/local/etc/php
 COPY apache2.conf /etc/apache2/apache2.conf
 
 RUN usermod -u 1000 www-data
-RUN groupmod -g 1000 $www-data
+RUN groupmod -g 1000 www-data
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php
