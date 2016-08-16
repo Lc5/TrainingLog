@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install \
     intl \
     opcache \
+    pdo_mysql \
     zip \
  && pecl install xdebug \
  && docker-php-ext-enable xdebug

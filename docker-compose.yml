@@ -9,8 +9,10 @@ services:
 
     db:
         environment:
-            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-            MYSQL_DATABASE: database
+            MYSQL_DATABASE: training_log
+            MYSQL_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_USER: user
 
         image: mysql
         ports:
