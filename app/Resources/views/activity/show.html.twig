@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Activity</h1>
 
-    <table>
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -46,8 +46,8 @@
                 <td>{{ activity.gear }}</td>
             </tr>
             <tr>
-                <th>Iscommmute</th>
-                <td>{% if activity.isCommmute %}Yes{% else %}No{% endif %}</td>
+                <th>Iscommute</th>
+                <td>{% if activity.isCommute %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
                 <th>Ismanual</th>
@@ -92,16 +92,16 @@
         </tbody>
     </table>
 
-    <ul>
+    <ul class="list-inline">
         <li>
-            <a href="{{ path('activity_index') }}">Back to the list</a>
+            <a href="{{ path('activity_index') }}" class="btn btn-link">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('activity_edit', { 'id': activity.id }) }}">Edit</a>
+            <a href="{{ path('activity_edit', { 'id': activity.id }) }}" class="btn btn-link">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Delete" class="btn btn-danger">
             {{ form_end(delete_form) }}
         </li>
     </ul>

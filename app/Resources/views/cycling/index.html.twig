@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Cycling list</h1>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -31,12 +31,12 @@
                 <td>{{ cycling.tss }}</td>
                 <td>{{ cycling.work }}</td>
                 <td>
-                    <ul>
+                    <ul class="list-inline">
                         <li>
-                            <a href="{{ path('cycling_show', { 'id': cycling.id }) }}">show</a>
+                            <a href="{{ path('cycling_show', { 'id': cycling.id }) }}" class="btn btn-link">show</a>
                         </li>
                         <li>
-                            <a href="{{ path('cycling_edit', { 'id': cycling.id }) }}">edit</a>
+                            <a href="{{ path('cycling_edit', { 'id': cycling.id }) }}" class="btn btn-link">edit</a>
                         </li>
                     </ul>
                 </td>
@@ -45,9 +45,10 @@
         </tbody>
     </table>
 
-    <ul>
+    <ul class="list-unstyled">
         <li>
-            <a href="{{ path('cycling_new') }}">Create a new entry</a>
+            <a href="{{ path('cycling_new') }}" class="btn btn-success">New ride</a>
         </li>
     </ul>
+
 {% endblock %}
