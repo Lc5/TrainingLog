@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Activity list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Avghr</th>
+                <th>Avgtemp</th>
+                <th>Avgspeed</th>
+                <th>Calories</th>
+                <th>Description</th>
+                <th>Device</th>
+                <th>Distance</th>
+                <th>Elapsedtime</th>
+                <th>Gear</th>
+                <th>Iscommmute</th>
+                <th>Ismanual</th>
+                <th>Istrainer</th>
+                <th>Maxhr</th>
+                <th>Maxspeed</th>
+                <th>Maxtemp</th>
+                <th>Movingtime</th>
+                <th>Name</th>
+                <th>Startdate</th>
+                <th>User</th>
+                <th>Workouttype</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for activity in activities %}
+            <tr>
+                <td><a href="{{ path('activity_show', { 'id': activity.id }) }}">{{ activity.id }}</a></td>
+                <td>{{ activity.avgHr }}</td>
+                <td>{{ activity.avgTemp }}</td>
+                <td>{{ activity.avgSpeed }}</td>
+                <td>{{ activity.calories }}</td>
+                <td>{{ activity.description }}</td>
+                <td>{{ activity.device }}</td>
+                <td>{{ activity.distance }}</td>
+                <td>{% if activity.elapsedTime %}{{ activity.elapsedTime|date('H:i:s') }}{% endif %}</td>
+                <td>{{ activity.gear }}</td>
+                <td>{% if activity.isCommmute %}Yes{% else %}No{% endif %}</td>
+                <td>{% if activity.isManual %}Yes{% else %}No{% endif %}</td>
+                <td>{% if activity.isTrainer %}Yes{% else %}No{% endif %}</td>
+                <td>{{ activity.maxHr }}</td>
+                <td>{{ activity.maxSpeed }}</td>
+                <td>{{ activity.maxTemp }}</td>
+                <td>{% if activity.movingTime %}{{ activity.movingTime|date('H:i:s') }}{% endif %}</td>
+                <td>{{ activity.name }}</td>
+                <td>{% if activity.startDate %}{{ activity.startDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ activity.user }}</td>
+                <td>{{ activity.workoutType }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('activity_show', { 'id': activity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('activity_edit', { 'id': activity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('activity_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

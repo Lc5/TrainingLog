@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Activity</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ activity.id }}</td>
+            </tr>
+            <tr>
+                <th>Avghr</th>
+                <td>{{ activity.avgHr }}</td>
+            </tr>
+            <tr>
+                <th>Avgtemp</th>
+                <td>{{ activity.avgTemp }}</td>
+            </tr>
+            <tr>
+                <th>Avgspeed</th>
+                <td>{{ activity.avgSpeed }}</td>
+            </tr>
+            <tr>
+                <th>Calories</th>
+                <td>{{ activity.calories }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ activity.description }}</td>
+            </tr>
+            <tr>
+                <th>Device</th>
+                <td>{{ activity.device }}</td>
+            </tr>
+            <tr>
+                <th>Distance</th>
+                <td>{{ activity.distance }}</td>
+            </tr>
+            <tr>
+                <th>Elapsedtime</th>
+                <td>{% if activity.elapsedTime %}{{ activity.elapsedTime|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Gear</th>
+                <td>{{ activity.gear }}</td>
+            </tr>
+            <tr>
+                <th>Iscommmute</th>
+                <td>{% if activity.isCommmute %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Ismanual</th>
+                <td>{% if activity.isManual %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Istrainer</th>
+                <td>{% if activity.isTrainer %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Maxhr</th>
+                <td>{{ activity.maxHr }}</td>
+            </tr>
+            <tr>
+                <th>Maxspeed</th>
+                <td>{{ activity.maxSpeed }}</td>
+            </tr>
+            <tr>
+                <th>Maxtemp</th>
+                <td>{{ activity.maxTemp }}</td>
+            </tr>
+            <tr>
+                <th>Movingtime</th>
+                <td>{% if activity.movingTime %}{{ activity.movingTime|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ activity.name }}</td>
+            </tr>
+            <tr>
+                <th>Startdate</th>
+                <td>{% if activity.startDate %}{{ activity.startDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>User</th>
+                <td>{{ activity.user }}</td>
+            </tr>
+            <tr>
+                <th>Workouttype</th>
+                <td>{{ activity.workoutType }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('activity_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('activity_edit', { 'id': activity.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

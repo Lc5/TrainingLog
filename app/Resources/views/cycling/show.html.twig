@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Cycling</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cycling.id }}</td>
+            </tr>
+            <tr>
+                <th>Avgcadence</th>
+                <td>{{ cycling.avgCadence }}</td>
+            </tr>
+            <tr>
+                <th>Avgpower</th>
+                <td>{{ cycling.avgPower }}</td>
+            </tr>
+            <tr>
+                <th>Intensityfactor</th>
+                <td>{{ cycling.intensityFactor }}</td>
+            </tr>
+            <tr>
+                <th>Maxcadence</th>
+                <td>{{ cycling.maxCadence }}</td>
+            </tr>
+            <tr>
+                <th>Maxpower</th>
+                <td>{{ cycling.maxPower }}</td>
+            </tr>
+            <tr>
+                <th>Normalizedpower</th>
+                <td>{{ cycling.normalizedPower }}</td>
+            </tr>
+            <tr>
+                <th>Tss</th>
+                <td>{{ cycling.tss }}</td>
+            </tr>
+            <tr>
+                <th>Work</th>
+                <td>{{ cycling.work }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('cycling_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('cycling_edit', { 'id': cycling.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

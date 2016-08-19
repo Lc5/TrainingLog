@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Cycling list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Avgcadence</th>
+                <th>Avgpower</th>
+                <th>Intensityfactor</th>
+                <th>Maxcadence</th>
+                <th>Maxpower</th>
+                <th>Normalizedpower</th>
+                <th>Tss</th>
+                <th>Work</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cycling in cyclings %}
+            <tr>
+                <td><a href="{{ path('cycling_show', { 'id': cycling.id }) }}">{{ cycling.id }}</a></td>
+                <td>{{ cycling.avgCadence }}</td>
+                <td>{{ cycling.avgPower }}</td>
+                <td>{{ cycling.intensityFactor }}</td>
+                <td>{{ cycling.maxCadence }}</td>
+                <td>{{ cycling.maxPower }}</td>
+                <td>{{ cycling.normalizedPower }}</td>
+                <td>{{ cycling.tss }}</td>
+                <td>{{ cycling.work }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('cycling_show', { 'id': cycling.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('cycling_edit', { 'id': cycling.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('cycling_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
