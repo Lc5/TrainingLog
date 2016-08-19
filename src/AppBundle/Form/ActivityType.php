@@ -26,7 +26,7 @@ class ActivityType extends AbstractType
             ->add('distance')
             ->add('elapsedTime', TimeType::class)
             ->add('gear')
-            ->add('isCommmute')
+            ->add('isCommute')
             ->add('isManual')
             ->add('isTrainer')
             ->add('maxHr')

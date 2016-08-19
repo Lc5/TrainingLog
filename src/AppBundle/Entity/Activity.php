@@ -92,7 +92,7 @@ class Activity
     /**
      * @ORM\Column(name="is_commute", type="boolean")
      */
-    private $isCommmute;
+    private $isCommute;
 
     /**
      * @ORM\Column(name="is_manual", type="boolean")
@@ -388,27 +388,27 @@ class Activity
     }
 
     /**
-     * Set isCommmute
+     * Set isCommute
      *
-     * @param \bool $isCommmute
+     * @param \bool $isCommute
      *
      * @return Activity
      */
-    public function setIsCommmute(bool $isCommmute)
+    public function setIsCommute(bool $isCommute)
     {
-        $this->isCommmute = $isCommmute;
+        $this->isCommute = $isCommute;
 
         return $this;
     }
 
     /**
-     * Get isCommmute
+     * Get isCommute
      *
      * @return \bool
      */
-    public function getIsCommmute()
+    public function getIsCommute()
     {
-        return $this->isCommmute;
+        return $this->isCommute;
     }
 
     /**
