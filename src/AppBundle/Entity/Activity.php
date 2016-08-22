@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ActivityRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"activity" = "Activity", "cycling" = "Cycling"})
+ * @ORM\DiscriminatorMap({"default" = "Activity", "ride" = "Ride"})
  */
 class Activity
 {

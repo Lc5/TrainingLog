@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cycling
+ * Ride
  *
- * @ORM\Table(name="cycling")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CyclingRepository")
+ * @ORM\Table(name="ride")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RideRepository")
  */
-class Cycling extends Activity
+class Ride extends Activity
 {
     /**
      * @var string
@@ -73,7 +73,7 @@ class Cycling extends Activity
      *
      * @param string $avgCadence
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setAvgCadence($avgCadence)
     {
@@ -97,7 +97,7 @@ class Cycling extends Activity
      *
      * @param string $avgPower
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setAvgPower($avgPower)
     {
@@ -121,7 +121,7 @@ class Cycling extends Activity
      *
      * @param integer $intensityFactor
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setIntensityFactor($intensityFactor)
     {
@@ -145,7 +145,7 @@ class Cycling extends Activity
      *
      * @param integer $maxCadence
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setMaxCadence($maxCadence)
     {
@@ -169,7 +169,7 @@ class Cycling extends Activity
      *
      * @param integer $maxPower
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setMaxPower($maxPower)
     {
@@ -193,7 +193,7 @@ class Cycling extends Activity
      *
      * @param integer $normalizedPower
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setNormalizedPower($normalizedPower)
     {
@@ -217,7 +217,7 @@ class Cycling extends Activity
      *
      * @param integer $tss
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setTss($tss)
     {
@@ -241,7 +241,7 @@ class Cycling extends Activity
      *
      * @param string $work
      *
-     * @return CyclingActivity
+     * @return Ride
      */
     public function setWork($work)
     {
