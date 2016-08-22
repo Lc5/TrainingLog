@@ -7,13 +7,12 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-
         <title>{% block title %}Welcome!{% endblock %}</title>
-
-        {% block stylesheets %}{% endblock %}
-        {% stylesheets '@bootstrap_css' %}
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-        {% endstylesheets %}
+        {% block stylesheets %}
+            {% stylesheets '@bootstrap_css' %}
+                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+            {% endstylesheets %}
+        {% endblock %}
     </head>
     <body>
         <div class="container">
@@ -21,7 +20,7 @@
         </div>
         {% block javascripts %}
             {% javascripts '@jquery' '@bootstrap_js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
+                <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
     </body>
