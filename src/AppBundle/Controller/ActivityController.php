@@ -2,12 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Activity;
+use AppBundle\Entity\Ride;
+use AppBundle\Form\ActivityType;
+use AppBundle\Form\RideType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Entity\Activity;
-use AppBundle\Form\ActivityType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Activity controller.
@@ -17,74 +21,82 @@ use AppBundle\Form\ActivityType;
 class ActivityController extends Controller
 {
     /**
-     * Lists all Activity entities.
-     *
      * @Route("/", name="activity_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction() : Response
     {
         $em = $this->getDoctrine()->getManager();
 
         $activities = $em->getRepository('AppBundle:Activity')->findAll();
 
-        return $this->render('activity/index.html.twig', array(
+        return $this->render('activity/index.html.twig', [
             'activities' => $activities,
-        ));
+        ]);
     }
 
     /**
-     * Creates a new Activity entity.
-     *
      * @Route("/new", name="activity_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request) : Response
     {
-        $activity = new Activity();
-        $form = $this->createForm('AppBundle\Form\ActivityType', $activity);
-        $form->handleRequest($request);
+        $forms = [];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($activity);
-            $em->flush();
-
-            return $this->redirectToRoute('activity_show', array('id' => $activity->getId()));
+        foreach ($this->getFormTypesMap() as $activityType => $formType) {
+            $forms[] = $this->createForm($formType, new $activityType);
         }
 
-        return $this->render('activity/new.html.twig', array(
-            'activity' => $activity,
-            'form' => $form->createView(),
-        ));
+        if ($request->isMethod('POST')) {
+            foreach ($forms as $form) {
+                $form->handleRequest($request);
+
+                if (!$form->isSubmitted()) continue;
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $activity = $form->getData();
+                    $em->persist($activity);
+                    $em->flush();
+
+                    return $this->redirectToRoute('activity_show', ['id' => $activity->getId()]);
+                }
+            }
+        }
+
+        $formViews = [];
+
+        foreach ($forms as $form) {
+            $formViews[strtolower((new \ReflectionClass($form->getData()))->getShortName())] = $form->createView();
+        }
+
+        return $this->render('activity/new.html.twig', [
+            'forms' => $formViews
+        ]);
     }
 
     /**
-     * Finds and displays a Activity entity.
-     *
      * @Route("/{id}", name="activity_show")
      * @Method("GET")
      */
-    public function showAction(Activity $activity)
+    public function showAction(Activity $activity) : Response
     {
         $deleteForm = $this->createDeleteForm($activity);
+        $templatePath = $this->getTemplatePath($activity, 'show');
 
-        return $this->render('activity/show.html.twig', array(
+        return $this->render($templatePath, [
             'activity' => $activity,
             'delete_form' => $deleteForm->createView(),
-        ));
+        ]);
     }
 
     /**
-     * Displays a form to edit an existing Activity entity.
-     *
      * @Route("/{id}/edit", name="activity_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Activity $activity)
+    public function editAction(Request $request, Activity $activity) : Response
     {
-        $deleteForm = $this->createDeleteForm($activity);
-        $editForm = $this->createForm('AppBundle\Form\ActivityType', $activity);
+        $editForm = $this->createForm($this->getFormType($activity), $activity);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -92,23 +104,24 @@ class ActivityController extends Controller
             $em->persist($activity);
             $em->flush();
 
-            return $this->redirectToRoute('activity_edit', array('id' => $activity->getId()));
+            return $this->redirectToRoute('activity_edit', ['id' => $activity->getId()]);
         }
 
-        return $this->render('activity/edit.html.twig', array(
+        $templatePath = $this->getTemplatePath($activity, 'edit');
+        $deleteForm = $this->createDeleteForm($activity);
+
+        return $this->render($templatePath, [
             'activity' => $activity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        ]);
     }
 
     /**
-     * Deletes a Activity entity.
-     *
      * @Route("/{id}", name="activity_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Activity $activity)
+    public function deleteAction(Request $request, Activity $activity) : Response
     {
         $form = $this->createDeleteForm($activity);
         $form->handleRequest($request);
@@ -122,19 +135,42 @@ class ActivityController extends Controller
         return $this->redirectToRoute('activity_index');
     }
 
-    /**
-     * Creates a form to delete a Activity entity.
-     *
-     * @param Activity $activity The Activity entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Activity $activity)
+    private function createDeleteForm(Activity $activity) : Form
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('activity_delete', array('id' => $activity->getId())))
+            ->setAction($this->generateUrl('activity_delete', ['id' => $activity->getId()]))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    private function getTemplatePath(Activity $activity, string $action) : string
+    {
+        $className = strtolower((new \ReflectionClass($activity))->getShortName());
+        $templatePath = "activity/$className/$action.html.twig";
+
+        if (!$this->get('templating')->exists($templatePath)) {
+            $templatePath = "activity/$action.html.twig";
+        }
+
+        return $templatePath;
+    }
+
+    private function getFormTypesMap() : array
+    {
+        return [
+            Activity::class => ActivityType::class,
+            Ride::class     => RideType::class
+        ];
+    }
+
+    private function getFormType(Activity $activity) : string
+    {
+        $class = get_class($activity);
+
+        if (!isset($this->getFormTypesMap()[$class])) {
+            throw new \UnexpectedValueException('No form type exists for given entity.');
+        }
+
+        return $this->getFormTypesMap()[$class];
     }
 }

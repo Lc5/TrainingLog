@@ -3,14 +3,37 @@
 {% block body %}
     <h1>Activity creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" class="btn btn-success" />
-    {{ form_end(form) }}
+    <label for="activity_type">Type</label>
+    <select title="Type" id="activity_type">
+        {% for type, form in forms %}
+            <option value="{{ type }}">{{ form.vars.name|capitalize }}</option>
+        {% endfor %}
+    </select>
+
+    {% for key, form in forms %}
+        <div class="form {% if not loop.first %}hidden{% endif %}" id="{{ key }}">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="Create" class="btn btn-success" />
+            {{ form_end(form) }}
+        </div>
+    {% endfor %}
 
     <ul class="list-inline">
         <li>
             <a href="{{ path('activity_index') }}" class="btn btn-link">Back to the list</a>
         </li>
     </ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#activity_type').on('change', function () {
+                $('.form').addClass('hidden');
+                $('#' + $(this).val()).removeClass('hidden');
+            });
+        });
+    </script>
 {% endblock %}

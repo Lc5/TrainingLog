@@ -603,30 +603,6 @@ class Activity
     }
 
     /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Activity
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set user
      *
      * @param string $user

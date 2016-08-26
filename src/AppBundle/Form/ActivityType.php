@@ -10,10 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -36,13 +32,9 @@ class ActivityType extends AbstractType
             ->add('name')
             ->add('startDate', DateTimeType::class)
             ->add('user')
-            ->add('workoutType')
-        ;
+            ->add('workoutType');
     }
-    
-    /**
-     * @param OptionsResolver $resolver
-     */
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
